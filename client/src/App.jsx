@@ -1,14 +1,25 @@
+import { useState, useCallback, useMemo } from 'react';
+import Cookies from 'js-cookie';
 import './App.css';
 import { LoginForm } from './LoginForm';
 import { UserContext } from './UserContext';
-import { useState, useCallback, useMemo } from 'react';
 import { User } from "./User.jsx";
-
+import { Securities } from "./Securities.jsx";
 
 function App() {
-  const [user, setUser] = useState(null);
-  const login = useCallback((u) => setUser(u), []);
-  const logout = useCallback(() => setUser(null), []);
+  let userCookie = null;
+  try {
+    userCookie = JSON.parse(Cookies.get('user'));
+  } catch (e) {}
+  const [user, setUser] = useState(userCookie);
+  const login = useCallback((u) => {
+    Cookies.set('user', JSON.stringify(u), { expires: 7, secure: true });
+    setUser(u);
+  }, []);
+  const logout = useCallback(() => {
+    Cookies.remove('user');
+    setUser(null);
+  }, []);
   const value = useMemo(() => ({ user, login, logout }), [user, login, logout]);
 
   return (
@@ -20,9 +31,7 @@ function App() {
           <User />
         </header>
         {user && (
-          <section>
-            Your content goes here
-          </section>
+          <Securities />
         )}
       </div>
     </UserContext.Provider>
