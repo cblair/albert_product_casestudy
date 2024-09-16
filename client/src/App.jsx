@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, React } from 'react';
 import Cookies from 'js-cookie';
 import './App.css';
 import { LoginForm } from './LoginForm';
@@ -10,7 +10,9 @@ function App() {
   let userCookie = null;
   try {
     userCookie = JSON.parse(Cookies.get('user'));
-  } catch (e) {}
+  } catch (e) {
+    console.error('Unable to parse user cookie', e);
+  }
   const [user, setUser] = useState(userCookie);
   const login = useCallback((u) => {
     Cookies.set('user', JSON.stringify(u), { expires: 7, secure: true });

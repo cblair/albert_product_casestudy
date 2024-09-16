@@ -57,6 +57,11 @@ lint-web: ## Run the linter on the Django project
 			pip install black && \
 			black ./django/casestudy
 
+lint-app: ## Run the linter on the React project
+	cd client/ ; npx -- eslint ./
+
+lint: lint-web lint-app
+
 submit: ## Dump the Postgres database and package your project into a solution.zip file you can submit
 	zip -r solution.zip .
 

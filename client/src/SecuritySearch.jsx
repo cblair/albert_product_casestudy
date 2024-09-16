@@ -1,4 +1,5 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext, useState, React } from "react";
+import PropTypes from "prop-types";
 import { UserContext } from "./UserContext";
 
 export default function SecuritySearch({refresh = () => {}}) {
@@ -71,3 +72,7 @@ export default function SecuritySearch({refresh = () => {}}) {
     </>
   );
 }
+
+SecuritySearch.propTypes = {
+  refresh: PropTypes.func,
+};
