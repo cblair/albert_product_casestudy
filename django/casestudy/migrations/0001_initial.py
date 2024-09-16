@@ -7,17 +7,29 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Security',
+            name="Security",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.TextField()),
-                ('ticker', models.TextField()),
-                ('last_price', models.DecimalField(blank=True, decimal_places=2, max_digits=11, null=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.TextField()),
+                ("ticker", models.TextField()),
+                (
+                    "last_price",
+                    models.DecimalField(
+                        blank=True, decimal_places=2, max_digits=11, null=True
+                    ),
+                ),
             ],
         ),
     ]

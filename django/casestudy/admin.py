@@ -6,6 +6,7 @@ Models registered with the Django admin will be accessible at http://localhost:8
 
 https://docs.djangoproject.com/en/4.2/ref/contrib/admin/
 """
+
 from django.contrib import admin
 from casestudy.models import Security
 
@@ -18,10 +19,7 @@ class EmailAdmin(admin.ModelAdmin):
     # Fields in the list_display list will appear in the Django admin list view.
     # https://docs.djangoproject.com/en/4.2/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_display
     list_display = [
-        'ticker',
-        'name',
-        'last_price',
+        "ticker",
+        "name",
+        "last_price",
     ]
-
-
-

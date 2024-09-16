@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, re_path
 
@@ -23,9 +24,7 @@ urlpatterns = [
     # The only url defined in the casestudy application are the admin urls. The admin urls are defined in the
     # django.contrib.admin application, and provide a GUI for viewing and managing the database models like 'Email'.
     # https://docs.djangoproject.com/en/4.2/ref/contrib/admin/
-    path('admin/', admin.site.urls),
-
-    path('login/', LoginView.as_view(), name='login'),
-    
-    re_path(r'^security/(?P<subpath>\w+)$', SecurityView.as_view(), name='security'),
+    path("admin/", admin.site.urls),
+    path("login/", LoginView.as_view(), name="login"),
+    re_path(r"^security/(?P<subpath>\w+)$", SecurityView.as_view(), name="security"),
 ]

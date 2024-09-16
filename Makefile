@@ -50,6 +50,13 @@ open-admin: ## Open the Django admin page
 open-app: ## Open the React app
 	open http://localhost:3000
 
+lint-web: ## Run the linter on the Django project
+	docker compose \
+	    run \
+	    web \
+			pip install black && \
+			black ./django/casestudy
+
 submit: ## Dump the Postgres database and package your project into a solution.zip file you can submit
 	zip -r solution.zip .
 

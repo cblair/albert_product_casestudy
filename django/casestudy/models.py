@@ -30,7 +30,10 @@ class Security(models.Model):
 
     # This field is used to store the last price of a security
     last_price = models.DecimalField(
-        null=True, blank=True, decimal_places=2, max_digits=11,
+        null=True,
+        blank=True,
+        decimal_places=2,
+        max_digits=11,
     )
-    
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='securities')
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="securities")
