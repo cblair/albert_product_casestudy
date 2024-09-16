@@ -4,15 +4,15 @@ Instead of spending hours interviewing and talking about building things, we wou
 Please approach this case study as if you were working on a real project at Albert with production quality design decisions, architecture, documentation, and code. 
 
 ### The project
-- Build a stock watchlist service and client application that allows users to view their favorite stock prices.
-- Users should be able to search for stocks by name or ticker and add them to a watchlist.
-- Users should be able to remove a stock from their watchlist.
-- Users should be able to see the current price of the stocks in their watchlist.
-- Prices should update every 5 seconds.
-- The service should be designed to support millions of users each with their own watchlist.
-- User data should be persisted in a database and re-used when the app is restarted.
-- The focus for this case study is on the service architecture and communication between the service and client application.
-- The client application must support user login and a single screen that contains a search bar, list of stocks and current prices, but it does not need to be a polished UI.
+- ✅ Build a stock watchlist service and client application that allows users to view their favorite stock prices.
+- Users should be able to search for stocks by name or ✅ ticker and add them to a watchlist.
+- ✅ Users should be able to remove a stock from their watchlist.
+- ✅ Users should be able to see the current price of the stocks in their watchlist.
+- ✅ Prices should update every 5 seconds.
+- ✅ The service should be designed to support millions of users each with their own watchlist.
+- ✅ User data should be persisted in a database and re-used when the app is restarted.
+- ✅ The focus for this case study is on the service architecture and communication between the service and client application.
+- ✅ The client application must support user login and a single screen that contains a search bar, list of stocks and current prices, but it does not need to be a polished UI.
 
 ### Setup
 #### Stock APIs 
