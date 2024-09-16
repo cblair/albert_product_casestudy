@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/topics/db/models/
 """
 
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Security(models.Model):
@@ -31,6 +32,5 @@ class Security(models.Model):
     last_price = models.DecimalField(
         null=True, blank=True, decimal_places=2, max_digits=11,
     )
-
-    # TODO: Add additional fields here.
-    # ex: description, exchange name, etc.
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='securities')
