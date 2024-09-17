@@ -11,12 +11,15 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
 
 ALBERT_CASE_STUDY_API_KEY = os.getenv("ALBERT_CASE_STUDY_API_KEY")
+
+TESTING = sys.argv[1:2] == ['test']
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

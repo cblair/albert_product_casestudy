@@ -62,6 +62,12 @@ lint-app: ## Run the linter on the React project
 
 lint: lint-web lint-app
 
+test-web: build
+	docker compose \
+			run \
+			web \
+			/app/test/scripts/run.sh
+
 submit: ## Dump the Postgres database and package your project into a solution.zip file you can submit
 	zip -r solution.zip .
 

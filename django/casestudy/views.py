@@ -58,6 +58,7 @@ class SecurityView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     refresh_interval = 5
     updater_initialized = False
+    albert_url = "https://app.albert.com"
 
     def __init__(self):
         super().__init__()
@@ -69,18 +70,20 @@ class SecurityView(APIView):
             },
             "all": {
                 "handler": self.__handle_all_securities,
-                "help": "/search?ticker=<ticker>",
+                "help": "/all",
             },
             "add": {
                 "handler": self.__handler_add_to_portfolio,
-                "help": "/add?ticker=<ticker>",
+                "help": "/add, data={ticker=<ticker>}",
             },
             "remove": {
                 "handler": self.__handler_remove_from_portfolio,
-                "help": "/remove?ticker=<ticker>",
+                "help": "/remove, data={ticker=<ticker>}",
             },
         }
-        if not SecurityView.updater_initialized:
+        print("Starting in mode: " + ("TESTING" if settings.TESTING else "PRODUCTION"))
+        if not settings.TESTING and not SecurityView.updater_initialized: # pragma: no cover
+            logger.info("SecurityView starting polling price updater.")
             self.__price_updater = ScheduledCall(
                 self.__price_updater, SecurityView.refresh_interval
             )
@@ -116,7 +119,7 @@ class SecurityView(APIView):
         if subpath in self.__handlers:
             param_keys = set(request.query_params.keys())
             if (
-                "params" in self.__handlers[subpath]
+                "params" in self.__handlers[subpath].keys()
                 and param_keys != self.__handlers[subpath]["params"]
             ):
                 help_message = f"Parameters required for subpath '{subpath}': {','.join(self.__handlers[subpath]['params'])}. Params supplied: '{','.join(param_keys)}'."
@@ -129,10 +132,7 @@ class SecurityView(APIView):
         return response
 
     def __help_message(self, subpath=""):
-        if subpath in self.__handlers:
-            return self.__handlers[subpath]["help"]
-        else:
-            return [subpath.help for subpath in self.__handlers.values()]
+        return self.__handlers[subpath]["help"]
 
     def __handle_search_ticker(self, request):
         """
@@ -141,7 +141,7 @@ class SecurityView(APIView):
         params = request.query_params
         ticker = params["ticker"]
 
-        ticker_data = self.__get_ticker_prices([ticker])
+        ticker_data = SecurityView.__get_ticker_prices([ticker])
 
         if ticker_data is None:
             return Response({"error": f"Could not find ticker {ticker}"}, status=200)
@@ -195,9 +195,10 @@ class SecurityView(APIView):
 
         return response
 
-    def __get_ticker_prices(self, tickers):
+    @staticmethod
+    def __get_ticker_prices(tickers): # pragma: no cover
         response = requests.get(
-            f"https://app.albert.com/casestudy/stock/prices/?tickers={','.join(tickers)}",
+            f"{SecurityView.albert_url}/casestudy/stock/prices/?tickers={','.join(tickers)}",
             headers={
                 "Albert-Case-Study-API-Key": settings.ALBERT_CASE_STUDY_API_KEY,
             },
@@ -208,13 +209,13 @@ class SecurityView(APIView):
 
         return response.json()
 
-    def __price_updater(self):
+    def __price_updater(self): # pragma: no cover
         unique_tickers = [
             security.get("ticker")
             for security in Security.objects.values("ticker").distinct()
         ]
         logger.info(f"Updating prices for tickers: {','.join(unique_tickers)}.")
-        data = self.__get_ticker_prices(unique_tickers) or {}
+        data = SecurityView.__get_ticker_prices(unique_tickers) or {}
 
         for ticker, price in data.items():
             Security.objects.filter(ticker=ticker).update(last_price=price)

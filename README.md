@@ -93,3 +93,30 @@ Run these commands in separate terminal.
 - `make up` should start the service and client.
 - `make open-app` should open the client application.
 - Once you have completed the project you can submit your solution by running `make submit` which will package your project into a solution.zip file you can submit through email.
+
+### Testing
+To unit test the backend, run:
+`make test-web`
+~
+```
+System check identified no issues (0 silenced).
+....
+----------------------------------------------------------------------
+Ran 4 tests in 8.468s
+
+OK
+Destroying test database for alias 'default'...
+Name                    Stmts   Miss  Cover   Missing
+-----------------------------------------------------
+casestudy/__init__.py       0      0   100%
+casestudy/admin.py          5      0   100%
+casestudy/models.py         7      0   100%
+casestudy/settings.py      27      0   100%
+casestudy/urls.py           4      0   100%
+casestudy/views.py         82      0   100%
+-----------------------------------------------------
+TOTAL                     125      0   100%
+```
+
+### Example
+![Example](./docs/img/example.png)
